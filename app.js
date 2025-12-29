@@ -11,14 +11,31 @@ const io = socket(server)
 const chess = new Chess()
 
 const player ={};
-const currentPlayer = 'W';
+const currentPlayer = 'w';
 
 app.use(express.static(path.join(__dirname,'public')))
 app.set('view engine','ejs');
  
 io.on('connection',(uniquesocket)=>{
-    console.log("connection establish",uniquesocket.id);
-    
+    console.log("connection establish");
+        if(!player.white){
+            player.white =uniquesocket.id
+            uniquesocket.emit('playerRole','w')
+        }
+        else if(!player.black){
+            player.black = uniquesocket.id
+            uniquesocket.emit('playerRole','b')
+        }
+        else{
+            uniquesocket.emit('playerRole')
+        }
+    uniquesocket.on('disconnect',()=>{
+        if(uniquesocket.id ===player.white){
+            delete player.white
+        }else if(uniquesocket.id ===player.black){
+            delete player.black
+        }
+    })
 })
 
 app.get('/',(req,res)=>{
