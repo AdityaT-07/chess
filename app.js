@@ -39,10 +39,18 @@ io.on('connection',(uniquesocket)=>{
             if(result){
                 currentPlayer = chess.turn()
                 io.emit('move',move)
+                io.emit('currentState',chess.fen())
+            }
+            else{
+                console.log("invalid move : ",move);
+                uniquesocket.emit('invalidMove',move)
+                
             }
           }
           catch(err){
-
+            console.log("invalid move : ",move);
+            console.log(err);
+            
           }
         })
 
