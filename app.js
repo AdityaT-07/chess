@@ -29,6 +29,23 @@ io.on('connection',(uniquesocket)=>{
         else{
             uniquesocket.emit('playerRole')
         }
+
+        uniquesocket.on('move',(move)=>{
+          try{
+              if(chess.turn()==='w' && uniquesocket.id===player.white) return;
+            if(chess.turn()==='b' && uniquesocket.id===player.black) return;
+
+            const result =chess.move(move);
+            if(result){
+                currentPlayer = chess.turn()
+                io.emit('move',move)
+            }
+          }
+          catch(err){
+
+          }
+        })
+
     uniquesocket.on('disconnect',()=>{
         if(uniquesocket.id ===player.white){
             delete player.white
