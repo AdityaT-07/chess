@@ -38,7 +38,7 @@ const renderBoard = () => {
                 //         ? square.type.toUpperCase()
                 //         : square.type.toLowerCase()
 
-                pieceElement.innerText = ''
+                pieceElement.innerText = getPieceUnicode(square)
                 // Allow drag only for current player
                 pieceElement.draggable = playerRole === square.color
 
@@ -85,7 +85,26 @@ const handleMove =  ()=>{
 
 }
 
-const getPieceUnicode = ()=>{
+const getPieceUnicode = (piece)=>{
+const unicodePieces = {
+    // White pieces
+    p: '♙',
+    r: '♖',
+    n: '♘',
+    b: '♗',
+    q: '♕',
+    k: '♔',
+
+    // Black pieces
+    P: '♟',
+    R: '♜',
+    N: '♞',
+    B: '♝',
+    Q: '♛',
+    K: '♚'
+}
+
+return unicodePieces[piece.type] || ''
 
 }
 
