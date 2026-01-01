@@ -32,8 +32,8 @@ io.on('connection',(uniquesocket)=>{
 
         uniquesocket.on('move',(move)=>{
           try{
-              if(chess.turn()==='w' && uniquesocket.id===player.white) return;
-            if(chess.turn()==='b' && uniquesocket.id===player.black) return;
+              if(chess.turn()==='w' && uniquesocket.id!==player.white) return;
+            if(chess.turn()==='b' && uniquesocket.id!==player.black) return;
 
             const result =chess.move(move);
             if(result){
